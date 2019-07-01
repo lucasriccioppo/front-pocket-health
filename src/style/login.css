@@ -1,0 +1,51 @@
+#login-panel {
+    background-color: white;
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 20%;
+}
+
+#login {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+}
+
+.in-form {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 2%;
+}
+
+#forgot {
+    color: #8190A5;
+    font-size: 14px;
+    padding-bottom: 7%;
+    margin-top: 7%;
+}
+
+#forgot:hover {
+    color: #707D8E;
+}
+
+#title {
+    width: 50%;
+    font-weight: bold;
+    color: #47525E;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    padding-top: 5%;
+}
+
+.btn-form {
+    width: 50%;
+    margin-top: 3%;  
+}
+
+#logo {
+    width: 50%;
+    margin-top: 5%;
+}
+
+h3 {
+    text-align: left;
+}

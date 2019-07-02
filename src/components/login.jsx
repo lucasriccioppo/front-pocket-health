@@ -8,7 +8,7 @@ class Login extends Component {
         super(props)
 
         this.state = {
-            username: "",
+            cnpj: "",
             password: "",
             emptyCredentials: false,
             authDenied: false,
@@ -21,7 +21,7 @@ class Login extends Component {
     }
 
     validateForm() {
-        return this.state.username.length > 0 && this.state.password.length > 0;
+        return this.state.cnpj.length > 0 && this.state.password.length > 0;
     }
 
     handleChange(event) {
@@ -34,7 +34,7 @@ class Login extends Component {
 
     handleSubmit() {
         event.preventDefault();
-        var url = "http://localhost:3000/login"
+        var url = "http://localhost:3000/institutionLogin"
         if (!this.validateForm()) {
             this.setState({ emptyCredentials: true })
             setTimeout(() => {
@@ -47,7 +47,7 @@ class Login extends Component {
                     {},
                     {
                         auth: {
-                            username: this.state.username,
+                            username: this.state.cnpj,
                             password: this.state.password
                         }
                     }
@@ -76,7 +76,7 @@ class Login extends Component {
                         <div id="title"><h3>Login</h3></div>
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
-                                <input id="username" value={this.state.username} onChange={this.handleChange} type="text" className="form-control in-form" placeholder="Username" />
+                                <input id="cnpj" value={this.state.username} onChange={this.handleChange} type="text" className="form-control in-form" placeholder="CNPJ" />
                                 <input id="password" value={this.state.password} onChange={this.handleChange} type="password" className="form-control in-form" placeholder="Password" />
                                 <button type="submit" className="btn btn-dark btn-form">Sign in</button>
                             </div>

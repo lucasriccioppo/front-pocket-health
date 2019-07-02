@@ -10,7 +10,7 @@ class InstitutionRegister extends Component {
                     <img id="logo" src={logo} alt="logo" />
                     <h3>Cadastro de Instituição</h3>
                     <form>
-
+                        
                     </form>
                 </div>
             </div>

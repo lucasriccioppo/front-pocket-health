@@ -9,12 +9,28 @@ class modal extends Component {
         this.state = {
             hour: "",
             medic: "",
-            patient: ""
+            patient: "",
+            consults: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleAdd = this.handleAdd.bind(this)
         this.renderRow = this.renderRow.bind(this)
+        this.updateTable = this.updateTable.bind(this)
+    }
 
+    updateTable = () => {
+        let institution = "5d24cfae56083f33640b549d"
+        let url = `http://localhost:3000/consults/${institution}`
+
+        axios
+            .get(url)
+            .then(response => {
+                this.setState({
+                    consults: response.data,
+                    isShowing: true
+                })
+            })
+            .catch(err => { })
     }
 
     handleChange(event) {
@@ -30,7 +46,7 @@ class modal extends Component {
             .get("http://localhost:3000/medic/"+this.state.medic)
             .then(medicResponse => {
                 axios
-                    .get("http://localhost:3000/patient/"+this.state.medic)
+                    .get("http://localhost:3000/patient/"+this.state.patient)
                     .then(patientResponse => {
                         axios
                             .post(
@@ -40,6 +56,9 @@ class modal extends Component {
                                     institution: localStorage.user,
                                     Date: consultDate,
                                     patient: patientResponse.data._id
+                                })
+                                .then(response => {
+                                    this.updateTable()
                                 })
                                 .catch(consultErr => {})
                     })

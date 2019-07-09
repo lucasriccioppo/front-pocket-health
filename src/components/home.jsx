@@ -4,6 +4,7 @@ import Navbar from './navbar'
 require('../style/home.css');
 import Calendar from 'react-calendar';
 import Modal from './Modal/Modal';
+import axios from 'axios';
 
 class InstitutionRegister extends Component {
 
@@ -12,16 +13,26 @@ class InstitutionRegister extends Component {
 
         this.state = {
             date: new Date(),
-            isShowing: false
+            isShowing: false,
+            consults: []
         }
     }
 
-    onChange = date => this.setState({ date })
+    onChange = date => this.setState({ date: date })
 
     openModalHandler = () => {
-        this.setState({
-            isShowing: true
-        });
+        let institution = "5d24cfae56083f33640b549d"
+        let url = `http://localhost:3000/consults/${institution}`
+
+        axios
+            .get(url)
+            .then(response => {
+                this.setState({
+                    consults: response.data,
+                    isShowing: true
+                })
+            })
+            .catch(err => { })
     }
 
     closeModalHandler = () => {
@@ -41,14 +52,17 @@ class InstitutionRegister extends Component {
                     <Calendar 
                         onChange={ this.onChange } 
                         value={ this.state.date }
-                        onClickDay={this.openModalHandler}
+                        onClickDay={ this.openModalHandler }
                         className="schedule"
                     />
                 </div>
                 <Modal
                     className="modal"
                     show={this.state.isShowing}
-                    close={this.closeModalHandler}>
+                    close={this.closeModalHandler}
+                    date={this.state.date}
+                    consults={this.state.consults}
+                    >
                 </Modal>
             </div>
         );

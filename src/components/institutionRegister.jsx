@@ -66,8 +66,6 @@ class InstitutionRegister extends Component {
                         street: response.data.logradouro,
                         state: response.data.uf,
                         city: response.data.localidade
-                    }, () => {
-                        console.log(this.state.street)
                     })
                 })
                 .catch(err => { })

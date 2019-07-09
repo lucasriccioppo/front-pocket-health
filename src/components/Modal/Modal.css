@@ -31,6 +31,8 @@
 .modal-body {
   padding: 10px 15px;
   text-align: center;
+  height: 58%;
+  overflow: auto
 }
 
 .modal-footer {
@@ -86,4 +88,18 @@
   margin: 15px;
   padding: 10px;
   font-weight: bold;
+}
+
+.modal-btn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.add-btn {
+  width: 30%;
+}
+
+.modal-add-button {
+  width: 100%;
 }

@@ -8,8 +8,8 @@ class InstitutionRegister extends Component {
             <div className="container">
                 
 
-                <nav class="navbar navbar-light bg-light">
-                    <a class="navbar-brand" href="#">
+                <nav className="navbar navbar-light bg-light">
+                    <a className="navbar-brand" href="#">
                         <img id="logo" src={logo} alt="logo" />
                     </a>
                 </nav>

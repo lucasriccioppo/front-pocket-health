@@ -4,7 +4,6 @@ import Navbar from './navbar'
 require('../style/home.css');
 import Calendar from 'react-calendar';
 import Modal from './Modal/Modal';
-import axios from 'axios';
 
 class InstitutionRegister extends Component {
 
@@ -13,26 +12,16 @@ class InstitutionRegister extends Component {
 
         this.state = {
             date: new Date(),
-            isShowing: false,
-            consults: []
+            isShowing: false
         }
     }
 
     onChange = date => this.setState({ date: date })
 
     openModalHandler = () => {
-        let institution = "5d24cfae56083f33640b549d"
-        let url = `http://localhost:3000/consults/${institution}`
-
-        axios
-            .get(url)
-            .then(response => {
-                this.setState({
-                    consults: response.data,
-                    isShowing: true
-                })
-            })
-            .catch(err => { })
+        this.setState({
+            isShowing: true
+        })
     }
 
     closeModalHandler = () => {
@@ -49,10 +38,10 @@ class InstitutionRegister extends Component {
                     Agenda
                 </div>
                 <div className="content-schedule">
-                    <Calendar 
-                        onChange={ this.onChange } 
-                        value={ this.state.date }
-                        onClickDay={ this.openModalHandler }
+                    <Calendar
+                        onChange={this.onChange}
+                        value={this.state.date}
+                        onClickDay={this.openModalHandler}
                         className="schedule"
                     />
                 </div>
@@ -61,8 +50,7 @@ class InstitutionRegister extends Component {
                     show={this.state.isShowing}
                     close={this.closeModalHandler}
                     date={this.state.date}
-                    consults={this.state.consults}
-                    >
+                >
                 </Modal>
             </div>
         );

@@ -19,15 +19,13 @@ class modal extends Component {
     }
 
     updateTable = () => {
-        let institution = "5d24cfae56083f33640b549d"
-        let url = `http://localhost:3000/consults/${institution}`
+        let url = `http://localhost:3000/consults/${localStorage.user}`
 
         axios
             .get(url)
             .then(response => {
                 this.setState({
-                    consults: response.data,
-                    isShowing: true
+                    consults: response.data
                 })
             })
             .catch(err => { })
@@ -43,32 +41,38 @@ class modal extends Component {
         consultDate.setHours(parseInt(this.state.hour, 10))
 
         axios
-            .get("http://localhost:3000/medic/"+this.state.medic)
+            .get("http://localhost:3000/medic/" + this.state.medic)
             .then(medicResponse => {
                 axios
-                    .get("http://localhost:3000/patient/"+this.state.patient)
+                    .get("http://localhost:3000/patient/" + this.state.patient)
                     .then(patientResponse => {
+                        let body = {
+                            medic: medicResponse.data._id,
+                            institution: localStorage.user,
+                            Date: consultDate,
+                            patient: patientResponse.data._id
+                        }
                         axios
                             .post(
-                                "http://localhost:3000/consult", 
-                                {
-                                    medic: medicResponse.data._id,
-                                    institution: localStorage.user,
-                                    Date: consultDate,
-                                    patient: patientResponse.data._id
-                                })
-                                .then(response => {
-                                    this.updateTable()
-                                })
-                                .catch(consultErr => {})
+                                "http://localhost:3000/consult",
+                                body
+                            )
+                            .then(response => {
+                                this.updateTable()
+                            })
+                            .catch(consultErr => { })
                     })
-                    .catch(patientErr => {})
+                    .catch(patientErr => { })
             })
-            .catch(medicErr => {})
+            .catch(medicErr => { })
     }
 
     renderRow(row) {
-        return (<tr><td>{typeof row.Date}</td><td>{row.medic}</td><td>{row.pacient}</td></tr>)
+        return (<tr key={row._id}><td>{new Date(row.Date).getHours()}</td><td>{row.medic.name}</td><td>{row.patient.name}</td></tr>)
+    }
+
+    componentDidMount(){
+        this.updateTable();
     }
 
     render() {
@@ -99,7 +103,7 @@ class modal extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.props.consults.map(row => this.renderRow(row))}
+                                {this.state.consults.map(row => this.renderRow(row))}
                             </tbody>
                         </table>
                     </div>

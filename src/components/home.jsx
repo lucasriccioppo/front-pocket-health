@@ -18,7 +18,7 @@ class InstitutionRegister extends Component {
     render() {
         return (
             <div className="container-fluid fill-height">
-                <Navbar />
+                <Navbar logout={() => this.props.history.push('/')} />
                     <div className="header-schedule">
                         <h2>
                             Agenda

@@ -16,7 +16,7 @@ class modal extends Component {
     }
 
     updateTable = () => {
-        let url = `http://localhost:3000/consults/${localStorage.user}`
+        let url = `http://localhost:3000/consults/${localStorage.user}/${this.props.date}`
 
         axios
             .get(url)

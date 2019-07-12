@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import './Modal.css';
+import './Modal.css'
 
 class modal extends Component {
-    constructor(props) {
-        super(props)
+    state = {
+        hour: "",
+        medic: "",
+        patient: "",
+        consults: []
+    }
 
-        this.state = {
-            hour: "",
-            medic: "",
-            patient: "",
-            consults: []
-        }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleAdd = this.handleAdd.bind(this)
-        this.renderRow = this.renderRow.bind(this)
-        this.updateTable = this.updateTable.bind(this)
+
+    componentDidMount(){
+        this.updateTable()
     }
 
     updateTable = () => {
@@ -24,19 +21,17 @@ class modal extends Component {
         axios
             .get(url)
             .then(response => {
-                this.setState({
-                    consults: response.data
-                })
+                this.setState({ consults: response.data })
             })
-            .catch(err => { })
+            .catch(err => console.error(err))
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({ [event.target.id]: event.target.value })
     }
 
-    handleAdd() {
-        let consultDate = this.props.date;
+    handleAdd = () => {
+        let consultDate = this.props.date
 
         consultDate.setHours(parseInt(this.state.hour, 10))
 
@@ -67,12 +62,8 @@ class modal extends Component {
             .catch(medicErr => { })
     }
 
-    renderRow(row) {
+    renderRow = (row) => {
         return (<tr key={row._id}><td>{new Date(row.Date).getHours()}</td><td>{row.medic.name}</td><td>{row.patient.name}</td></tr>)
-    }
-
-    componentDidMount(){
-        this.updateTable();
     }
 
     render() {
@@ -142,4 +133,4 @@ class modal extends Component {
     }
 }
 
-module.exports = modal;
+module.exports = modal

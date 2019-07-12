@@ -1,51 +1,43 @@
 import React, { Component } from 'react'
 import logo from '../../public/logo.png'
-import axios from 'axios';
-require('../style/institutionRegister.css');
+import axios from 'axios'
+
+import '../style/institutionRegister.css'
 
 class InstitutionRegister extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            cep: "",
-            city: "",
-            state: "",
-            street: "",
-            number: "",
-            complement: "",
-            name: "",
-            cnpj: "",
-            password: "",
-            type: "",
-            phone: ""
-        }
-        this.onlynumber = this.onlynumber.bind(this)
-        this.validateForm = this.validateForm.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.findCep = this.findCep.bind(this)
-        this.registerInstitution = this.registerInstitution.bind(this)
+    state = {
+        cep: "",
+        city: "",
+        state: "",
+        street: "",
+        number: "",
+        complement: "",
+        name: "",
+        cnpj: "",
+        password: "",
+        type: "",
+        phone: ""
     }
 
-    onlynumber(evt) {
-        var theEvent = evt || window.event;
-        var key = theEvent.keyCode || theEvent.which;
-        key = String.fromCharCode(key);
-        var regex = /^[0-9.]+$/;
+    onlynumber = (evt) => {
+        var theEvent = evt || window.event
+        var key = theEvent.keyCode || theEvent.which
+        key = String.fromCharCode(key)
+        var regex = /^[0-9.]+$/
         if (!regex.test(key)) {
-            theEvent.returnValue = false;
-            if (theEvent.preventDefault) theEvent.preventDefault();
+            theEvent.returnValue = false
+            if (theEvent.preventDefault) theEvent.preventDefault()
         }
     }
 
-    validateForm() {
+    validateForm = () => {
         return this.state.cep > 0 && this.state.city.length > 0 && this.state.state.length > 0 &&
             this.state.street.length > 0 && this.state.number.length > 0 && this.state.complement.length > 0 &&
             this.state.name.length > 0 && this.state.cnpj.length > 0 && this.state.password.length > 0 &&
-            this.state.phone.length > 0;
+            this.state.phone.length > 0
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         var id = event.target.id
         this.setState({ [id]: event.target.value }, () => {
             if (id === "cep") {
@@ -54,7 +46,7 @@ class InstitutionRegister extends Component {
         })
     }
 
-    findCep(cep) {
+    findCep = (cep) => {
         if (cep.length >= 8) {
             var preparedCep = cep.slice(0, 5) + '-' + cep.slice(5, 8)
             var url = `http://localhost:3000/cep/${preparedCep}`
@@ -72,8 +64,8 @@ class InstitutionRegister extends Component {
         }
     }
 
-    registerInstitution() {
-        event.preventDefault();
+    registerInstitution = () => {
+        event.preventDefault()
         var institution = {
             cep: this.state.cep,
             city: this.state.city,
@@ -207,8 +199,8 @@ class InstitutionRegister extends Component {
                     </div>
                 </div>
             </div >
-        );
+        )
     }
 }
 
-module.exports = InstitutionRegister;
+export default InstitutionRegister

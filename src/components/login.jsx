@@ -1,69 +1,51 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import logo from '../../public/logo.png'
-const axios = require('axios');
-require('../style/login.css');
+import '../style/login.css'
 
 class Login extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            cnpj: "",
-            password: "",
-            emptyCredentials: false,
-            authDenied: false,
-            redirect: false
-        }
-        this.validateForm = this.validateForm.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChange = this.handleChange.bind(this)
-        this.routeChange = this.routeChange.bind(this)
+    state = {
+        cnpj: "",
+        password: "",
+        emptyCredentials: false,
+        authDenied: false,
+        redirect: false
     }
+    
+    validateForm = () => this.state.cnpj.length > 0 && this.state.password.length > 0
 
-    validateForm() {
-        return this.state.cnpj.length > 0 && this.state.password.length > 0;
-    }
+    handleChange = (event) => this.setState({ [event.target.id]: event.target.value })
 
-    handleChange(event) {
-        this.setState({ [event.target.id]: event.target.value })
-    }
+    routeChange = (path) => this.props.history.push(path)
 
-    routeChange(path) {
-        this.props.history.push(path);
-    }
-
-    handleSubmit() {
-        event.preventDefault();
+    handleSubmit = () => {
+        event.preventDefault()
         var url = "http://localhost:3000/institutionLogin"
         if (!this.validateForm()) {
             this.setState({ emptyCredentials: true })
             setTimeout(() => {
                 this.setState({ emptyCredentials: false })
-            }, 3000);
+            }, 3000)
         } else {
             axios
-                .post(
-                    url,
-                    {},
-                    {
-                        auth: {
-                            username: this.state.cnpj,
-                            password: this.state.password
-                        }
+                .post( url, {}, {
+                    auth: { 
+                        username: this.state.cnpj,
+                        password: this.state.password
                     }
-                )
+                })
                 .then(response => {
-                    localStorage.auth = response.data.token;
-                    localStorage.user = response.data.user;
+                    localStorage.auth = response.data.token
+                    localStorage.user = response.data.user
                     this.routeChange('/home')
                 })
                 .catch(err => {
                     this.setState({ authDenied: true })
                     setTimeout(() => {
                         this.setState({ authDenied: false })
-                    }, 3000);
-                    console.log(err);
-                });
+                    }, 3000)
+                    console.log(err)
+                })
         }
     }
 
@@ -109,8 +91,8 @@ class Login extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-module.exports = Login;
+export default Login

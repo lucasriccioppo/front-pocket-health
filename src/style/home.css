@@ -9,8 +9,23 @@
 .content-schedule {
   display: flex;
   justify-content: center;
+  height: 80%;
 }
 
 .schedule {
-  width: 85%;
+  width: 70%;
+  height: 80%;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  background-color: white;
+}
+
+.fill-height {
+  min-height: 100%;
+  height:auto !important; /* cross-browser */
+  height: 100%; /* cross-browser */
+  background-color: white;
 }

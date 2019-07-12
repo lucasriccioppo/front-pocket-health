@@ -19,6 +19,8 @@ class InstitutionRegister extends Component {
         phone: ""
     }
 
+    routeChange = (path) => this.props.history.push(path)
+
     onlynumber = (evt) => {
         var theEvent = evt || window.event
         var key = theEvent.keyCode || theEvent.which
@@ -85,6 +87,7 @@ class InstitutionRegister extends Component {
             .post(url, institution)
             .then(response => {
                 console.log(response)
+                this.routeChange('/')
             })
             .catch(err => {
                 console.log(err)
@@ -192,7 +195,7 @@ class InstitutionRegister extends Component {
                             <div className="row">
                                 <div className="col-md-8"></div>
                                 <div className="col-md-4">
-                                    <button onClick={ this.registerInstitution} className="btn btn-dark btn-block">Confirmar</button>
+                                    <button onClick={this.registerInstitution} className="btn btn-dark btn-block">Confirmar</button>
                                 </div>
                             </div>
                         </form>

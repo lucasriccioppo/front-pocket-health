@@ -3,7 +3,6 @@ import Navbar from './navbar'
 import Calendar from 'react-calendar'
 import Modal from './Modal/Modal'
 
-import '../style/institutionRegister.css'
 import '../style/home.css'
 
 class InstitutionRegister extends Component {
@@ -18,18 +17,20 @@ class InstitutionRegister extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid fill-height">
                 <Navbar />
-                <div className="header-schedule">
-                    Agenda
-                </div>
-                <div className="content-schedule">
-                    <Calendar
-                        value={this.state.date}
-                        onClickDay={this.onClickDay}
-                        className="schedule"
-                    />
-                </div>
+                    <div className="header-schedule">
+                        <h2>
+                            Agenda
+                        </h2>
+                    </div>
+                    <div className="content-schedule">
+                        <Calendar
+                            value={this.state.date}
+                            onClickDay={this.onClickDay}
+                            className="schedule"
+                        />
+                    </div>
                 {this.state.isShowing && (
                     <Modal
                         className="modal"

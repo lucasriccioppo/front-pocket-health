@@ -11,15 +11,25 @@ class modal extends Component {
     }
 
 
-    componentDidMount(){
+    componentDidMount() {
         this.updateTable()
     }
 
+    getStorageToken = () => {
+        var config = {
+            headers: {
+                Authorization: "Bearer " + localStorage.auth
+            }
+        };
+        return config;
+    }
+
     updateTable = () => {
+        let config = this.getStorageToken();
         let url = `http://localhost:3000/consults/${localStorage.user}/${this.props.date}`
 
         axios
-            .get(url)
+            .get(url, config)
             .then(response => {
                 this.setState({ consults: response.data })
             })
@@ -31,15 +41,16 @@ class modal extends Component {
     }
 
     handleAdd = () => {
+        let config = this.getStorageToken();
         let consultDate = this.props.date
 
         consultDate.setHours(parseInt(this.state.hour, 10))
 
         axios
-            .get("http://localhost:3000/medic/" + this.state.medic)
+            .get("http://localhost:3000/medic/" + this.state.medic, config)
             .then(medicResponse => {
                 axios
-                    .get("http://localhost:3000/patient/" + this.state.patient)
+                    .get("http://localhost:3000/patient/" + this.state.patient, config)
                     .then(patientResponse => {
                         let body = {
                             medic: medicResponse.data._id,
@@ -50,10 +61,16 @@ class modal extends Component {
                         axios
                             .post(
                                 "http://localhost:3000/consult",
-                                body
+                                body,
+                                config
                             )
                             .then(response => {
                                 this.updateTable()
+                                this.setState({
+                                    hour: "",
+                                    medic: "",
+                                    patient: "",
+                                })
                             })
                             .catch(consultErr => { })
                     })
